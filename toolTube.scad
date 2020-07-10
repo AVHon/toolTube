@@ -4,7 +4,7 @@ pl = 32; // Part Length, millimeters. Maximum contained length is 2*PL
 th = 6; // Thread Height, millimeters. Like metric screw pitch, but 6 threads
 wt = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
 module thread_profile(){
-	resize([id/15,id/15,th]) rotate([45,-atan(1/sqrt(2))]) cube(1,true);
+	resize([id/15,id/15,th]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
 module thread(a, r){ // make a thread spanning back `a` degrees, at radius r
 	s = $fn==0 ? $fa : 360/$fn; // angle Step between cylinder edges
