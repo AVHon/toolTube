@@ -12,9 +12,7 @@ th = tr*360/6; // Thread profile Height, millimeters
 nt = floor((ph-(0.5*th)) / th); // Number of Tabs in each spiral
 $fn=res*6; // Cylinder resolution, segments per circle
 module thread_profile(){
-	$fn=6;
-	cylinder(h=th/2, r1=id/30, r2=0);
-	scale(-1) cylinder(h=th/2, r1=id/30, r2=0);
+	scale([sqrt(3/2)*id/30, sqrt(3/2)*id/30, th/sqrt(3)]) rotate([45,-atan(1/sqrt(2)),0]) cube(1, center=true);
 }
 module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	s = $fn==0 ? $fa : 360/$fn; // angle Step between verticies
@@ -43,9 +41,9 @@ module inner(){
 }
 translate([1.5*id, 0, 0]) inner();
 module outer(){
-	difference(){
+	translate([0,0,ph/2]) scale(-1) translate([0,0,-ph/2]) difference(){
 		cylinder(h=ph, d=od);
-		for(i=[1: 6]) rotate(i*360/6) translate([0, 0, ph]) tab(120, od/2);
+		for(i=[1: 6]) rotate(i*360/6) translate([0, 0, 90*tr]) tab(120, od/2);
 	}
 }
 outer();
