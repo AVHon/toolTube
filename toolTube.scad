@@ -43,7 +43,7 @@ module inner(){
 }
 translate([1.5*id, 0, 0]) inner();
 module outer(){
-	difference(){
+	scale([-1,1,1]) difference(){
 		cylinder(h=ph, d=od);
 		for(i=[1: 6]) rotate(i*360/6) translate([0, 0, ph]) tab(120, od/2);
 	}
