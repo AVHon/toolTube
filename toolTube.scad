@@ -10,7 +10,7 @@ ph = ml/2; // Part Height (extra length for overlap will come from cap)
 tr = tan(ts)*PI*id/360; // Tab Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
 nt = floor((ph-(0.5*th)) / th); // Number of Tabs in each spiral
-$fn=res*6; // Cylinder resolution, segments per circle
+//$fn=res*6; // Cylinder resolution, segments per circle
 module thread_profile(){ // uses approximations of cube angles and distances
 	scale([1.2*id/30,1.2*id/30,th/1.7]) rotate([45,-35,0]) cube(1,center=true);
 }
@@ -36,7 +36,7 @@ module inner(){
 		translate([0, 0, -1*id/8]) cylinder(h=0.01, r=od/2);
 		cr = od/2/cos(30); // Cap Radius. Hexagon with flats tangent to OD
 		translate([0, 0, -3*id/8]) linear_extrude(id/8)
-				RoundedRegularPolygon(6, cr, cr/3);
+				RoundedRegularPolygon(6, cr, cr/3, $fn=$fn==0?360/$fa:$fn);
 	}
 }
 translate([1.5*id, 0, 0]) inner();
