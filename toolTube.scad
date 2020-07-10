@@ -28,7 +28,7 @@ module inner(){ // tube, 6 columns of threads, and a cap at the bottom
 	}
 }
 translate([1.3*od, 0, 3*ID/8]) inner();
-module outer(){ // tube, and 6 spirals of upside-down threads
+module outer(){ // tube, and 6 upside-down threads
 	rotate([0,180]) translate([0,0,-PL]) difference(){
 		cylinder(h=PL, d=od);
 		for(i=[1:6]) rotate(i*360/6) translate([0,0,1.5*th]) thread(120, od/2);
