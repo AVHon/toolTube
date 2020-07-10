@@ -13,22 +13,23 @@ od= id*(16/15); // Outside Diameter (tab profile diameter is id/15)
 ph = ml/2; // Part Height (overlap will come from caps)
 
 tr = tan(ts)*c/360; // Tab Rise per degree
+th = tr*360/6; // Tab Height (6 spirals of threads fill the available space)
 nt = floor(6 * ph / (tr*360)); // Number of Tabs in each spiral
 echo(str(nt, " rows of tabs in each column."));
 
 $fn=res*6; // Cylinder resolution, segments per circle
 
 module thread_profile(){
-	scale(id/15) union(){
+	scale([id/15,id/15,th]) union(){
 		$fn=6;
 		cylinder(0.5, 0.5, 0);
 		translate ([ 0, 0, -0.5]) cylinder(0.5, 0, 0.5);
 	}
 }
 
-module tab(a, r){ // make a tab spanning up to `a` degrees of arc, at radius r
+module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	s = 360/$fn; // angle Step of all cylinders
-	for(ca=[s:s:a]){ // Current Angle to put a thread profile at
+	for(ca=[-a+s:s:0]){ // Current Angle to put a thread profile at
 		pa = ca-s; // Previous Angle of a thread profile, to connect to
 		hull(){
 			rotate(pa) translate([r, 0, tr*pa]) thread_profile();
@@ -39,8 +40,8 @@ module tab(a, r){ // make a tab spanning up to `a` degrees of arc, at radius r
 
 module tab_column(){
 	// make a column of `nt` many tabs, from top to bottom
-	for(n=[1:nt]){
-		z=ph-n*ph/nt+15*tr;
+	for(n=[0:nt-1]){
+		z=ph-n*ph/nt-th/2;
 		// make one tab
 		translate([0,0,z]) tab(30, id/2);
 	}
