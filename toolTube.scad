@@ -31,8 +31,8 @@ module inner(){
 		translate([0, 0, -1*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
 		cr = od/2/cos(30); // Cap Radius. Hexagon with flats tangent to OD
 		translate([0, 0, -3*id/8]) linear_extrude(id/8)
-				RoundedRegularPolygon(6, cr, cr/3, $fn=$fn==0?360/$fa:$fn);
-	}
+			RoundedRegularPolygon(6, cr, cr/3);
+		}
 }
 translate([1.5*id, 0, 0]) inner();
 module outer(){
