@@ -13,14 +13,13 @@ od= id*(16/15); // Outside Diameter (tab profile diameter is id/15)
 ph = ml/2; // Part Height (overlap will come from caps)
 
 tr = tan(ts)*c/360; // Tab Rise per degree
-th = tr*20; // Height of a Tab
 nt = floor(6 * ph / (tr*360)); // Number of Tabs in each spiral
 echo(str(nt, " rows of tabs in each column."));
 
 $fn=res*6; // Cylinder resolution, segments per circle
 
 module thread_profile(){
-	scale([id/15,id/15,th]) union(){
+	scale(id/15) union(){
 		$fn=6;
 		cylinder(0.5, 0.5, 0);
 		translate ([ 0, 0, -0.5]) cylinder(0.5, 0, 0.5);
