@@ -11,8 +11,8 @@ tr = tan(ts)*PI*id/360; // Tab Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
 nt = floor((ph-(0.5*th)) / th); // Number of Tabs in each spiral
 $fn=res*6; // Cylinder resolution, segments per circle
-module thread_profile(){
-	scale([sqrt(3/2)*id/30, sqrt(3/2)*id/30, th/sqrt(3)]) rotate([45,-atan(1/sqrt(2)),0]) cube(1, center=true);
+module thread_profile(){ // uses approximations of cube angles and distances
+	scale([1.2*id/30,1.2*id/30,th/1.7]) rotate([45,-35,0]) cube(1,center=true);
 }
 module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	s = $fn==0 ? $fa : 360/$fn; // angle Step between verticies
