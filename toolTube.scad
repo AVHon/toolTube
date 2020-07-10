@@ -28,7 +28,7 @@ module inner(){
 	for(i=[1: 6]) rotate(i*360/6) tab_column();
 	translate([0, 0, -3*id/8]) hull(){ // cap at the bottom of the tube
 		linear_extrude(id/8) RoundedRegularPolygon(6, od/2/cos(30), od/5);
-		translate([0, 0, 2*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
+		translate([0, 0, 2*id/8]) cylinder(h=id/8, d1=od, d2=id);
 	}
 }
 translate([1.3*od, 0, 3*id/8]) inner();
