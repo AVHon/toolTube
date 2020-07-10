@@ -19,12 +19,11 @@ module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	}
 }
 module tab_column(nt){ // make a column of `nt` many tabs, from `PL` down
-	nt = floor(PL/th)-1; // Number of thread Tabs in a column
 	for(n=[0: nt-1]) translate([0, 0, PL-n*th-th/2]) tab(30, ID/2);
 }
 module inner(){
 	cylinder(h=PL, d=ID);
-	for(i=[1: 6]) rotate(i*360/6) tab_column();
+	for(i=[0: 5]) rotate(i*360/6) tab_column(floor(PL/th-1));
 	translate([0, 0, -3*ID/8]) hull(){ // cap at the bottom of the tube
 		linear_extrude(ID/8) RoundedRegularPolygon(6, od/2/cos(30), od/5);
 		translate([0, 0, 2*ID/8]) cylinder(h=ID/8, d1=od, d2=ID);
