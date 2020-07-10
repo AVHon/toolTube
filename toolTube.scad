@@ -7,7 +7,7 @@ ts = 30; // Thread slope, degrees. 90 is axial. Calculated on ID
 od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
 tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
-module thread_profile(){ // uses approximations of cube angles and distances
+module thread_profile(){
 	resize([id/15,id/15,th]) rotate([45,-atan(1/sqrt(2))]) cube(1,center=true);
 }
 module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
