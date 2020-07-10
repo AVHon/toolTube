@@ -1,8 +1,8 @@
 use <RoundedRegularPolygon.scad>
 ID = 20; // Inside Diameter, millimeters
-PL = 32; // Part Length, millimeters. Maximum contained length is 2*tl
+PL = 32; // Part Length, millimeters. Maximum contained length is 2*PL
 WT = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
-TS = 30; // Thread slope, degrees. 90 is axial. Calculated on ID
+TS = 30; // Thread Slope, degrees. 90 is axial. Calculated on ID
 od = ID*(16/15)+WT; // Outside Diameter (thread profile diameter is id/15)
 tr = tan(TS)*PI*ID/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
@@ -18,7 +18,7 @@ module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 		}
 	}
 }
-module tab_column(){ // make a column of `nt` many tabs, from `pl` down
+module tab_column(nt){ // make a column of `nt` many tabs, from `PL` down
 	nt = floor(PL/th)-1; // Number of thread Tabs in a column
 	for(n=[0: nt-1]) translate([0, 0, PL-n*th-th/2]) tab(30, ID/2);
 }
