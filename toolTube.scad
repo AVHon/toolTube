@@ -26,12 +26,10 @@ module tab_column(){ // make a column of `nt` many tabs, from `pl` down
 module inner(){
 	cylinder(h=pl, d=id);
 	for(i=[1: 6]) rotate(i*360/6) tab_column();
-	hull(){ // cap at the bottom of the tube
-		translate([0, 0, -1*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
-		cr = od/2/cos(30); // Cap Radius. Hexagon with flats tangent to OD
-		translate([0, 0, -3*id/8]) linear_extrude(id/8)
-			RoundedRegularPolygon(6, cr, cr/3);
-		}
+	translate([0, 0, -3*id/8]) hull(){ // cap at the bottom of the tube
+		linear_extrude(id/8) RoundedRegularPolygon(6, od/2/cos(30), od/5);
+		translate([0, 0, 2*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
+	}
 }
 translate([1.5*id, 0, 0]) inner();
 module outer(){
