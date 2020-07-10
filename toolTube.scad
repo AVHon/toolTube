@@ -2,13 +2,13 @@ use <RoundedRegularPolygon.scad>;
 id = 20; // Inside Diameter, millimeters
 wt = 0.5; // Wall Thickness, millimeters
 ml = 65; // Maximum Length of contained objects, millimeters
-ts = 30; // Tab slope, degrees
+ts = 30; // Thread slope, degrees (90 is axial)
 // This is the end of the configurable parameters!
-od = id*(32/30); // Outside Diameter (tab profile radius is id/30)
+od = id*(32/30); // Outside Diameter (thread profile radius is id/30)
 ph = ml/2; // Part Height (extra length for overlap will come from cap)
-tr = tan(ts)*PI*id/360; // Tab Rise, millimeters per degree
+tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
-nt = floor((ph-(0.5*th)) / th); // Number of Tabs in each spiral
+nt = floor((ph-(0.5*th)) / th); // Number of Tabs in a column to make threads
 module thread_profile(){ // uses approximations of cube angles and distances
 	scale([1.2*id/30,1.2*id/30,th/1.7]) rotate([45,-35,0]) cube(1,center=true);
 }
