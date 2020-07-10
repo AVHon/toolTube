@@ -66,8 +66,11 @@ module inner(){
 }
 translate([1.5*id,0,0]) inner();
 
-// TODO:
-//  - make the outside part
-//  - make the outside and inside parts fit each other
-//      the innermost parts of the outer piece need to barely touch the outside of the inner piece,
-//      and vice versa
+module outer(){
+	difference(){
+		cylinder(h=ph, d=od);
+		for(i=[1:6]) rotate(i*360/6) translate([0,0,ph]) tab(120, od/2);
+	}
+}
+outer();
+
