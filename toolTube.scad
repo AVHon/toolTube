@@ -61,38 +61,38 @@ translate([1.5*id,0,0]) union(){
 	}
 }
 
-difference(){
-	cylinder(h=ph, r=id/2+wt);
-	as = [ for(i=[0:360/$fn:(ph/tr)+(360/$fn)]) i];
-	for(j=[360/6:360/6:360]){
-		for(i=[1:len(as)-1]){
-			hull(){
-				rotate(as[i-1]+j){
-					translate([id/2+wt,0,tr*as[i-1]]){
-						scale([id/15,id/15,th]){
-							union(){
-								$fn=6;
-								translate([0,0,0.5]) cylinder(0.5,0.5,0);
-								cylinder(0.5,0,0.5);
-							}
-						}
-					}
-				}
-				rotate(as[i]+j){
-					translate([id/2+wt,0,tr*as[i]]){
-						scale([id/15,id/15,th]){
-							union(){
-								$fn=6;
-								translate([0,0,0.5]) cylinder(0.5,0.5,0);
-								cylinder(0.5,0,0.5);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
+// difference(){
+// 	cylinder(h=ph, r=id/2+wt);
+// 	as = [ for(i=[0:360/$fn:(ph/tr)+(360/$fn)]) i];
+// 	for(j=[360/6:360/6:360]){
+// 		for(i=[1:len(as)-1]){
+// 			hull(){
+// 				rotate(as[i-1]+j){
+// 					translate([id/2+wt,0,tr*as[i-1]]){
+// 						scale([id/15,id/15,th]){
+// 							union(){
+// 								$fn=6;
+// 								translate([0,0,0.5]) cylinder(0.5,0.5,0);
+// 								cylinder(0.5,0,0.5);
+// 							}
+// 						}
+// 					}
+// 				}
+// 				rotate(as[i]+j){
+// 					translate([id/2+wt,0,tr*as[i]]){
+// 						scale([id/15,id/15,th]){
+// 							union(){
+// 								$fn=6;
+// 								translate([0,0,0.5]) cylinder(0.5,0.5,0);
+// 								cylinder(0.5,0,0.5);
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
 // TODO:
 //  - make the outside part
