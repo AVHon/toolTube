@@ -2,7 +2,7 @@ use <RoundedRegularPolygon.scad>;
 id = 20; // Inside Diameter, millimeters
 wt = 0.5; // Wall Thickness, millimeters
 ml = 65; // Maximum Length of contained objects, millimeters
-ts = 30; // Thread slope, degrees (90 is axial)
+ts = 30; // Thread slope, degrees (90 is axial) (calculated on ID)
 // This is the end of the configurable parameters!
 od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
 ph = ml/2; // Part Height (extra length for overlap will come from cap)
