@@ -7,8 +7,8 @@ ts = 30; // Tab slope, in Degrees
 res = 3; // resolution
 // end of configurable parameters
 
-r = id/2; // Radius
 c = PI*id; // Circumference
+od= id*(16/15); // Outside Diameter (tab profile diameter is id/15)
 
 ph = ml/2; // Part Height (overlap will come from caps)
 
@@ -27,35 +27,38 @@ module thread_profile(){
 	}
 }
 
-translate([1.5*id,0,0]) union(){
-	// make the tube
-	linear_extrude(ph){
-			circle(r);
-	}
-	
-	// make 6 columns of tabs
-	for(j=[00:360/6:360-360/6]){
-		// make a column of up to `nt` tabs
-		for(k=[ph-ph/nt : -ph/nt : ph-nt*ph/nt]){
-			// make one tab
-			hull(){
-				for(i=[15:360/$fn:45]){
-					rotate(i+j-15){
-						translate([r,0,tr*i+k]){
-							thread_profile();
-						}
+module tab_column(){
+	// make a column of `nt` many tabs, from top to bottom
+	for(z=[ph-ph/nt : -ph/nt : ph-nt*ph/nt]){
+		// make one tab
+		hull(){
+			for(i=[0:360/$fn:30]){ // tabs are 30 degrees long
+				rotate(i){
+					translate([id/2,0,tr*(i+15)+z]){
+
+						thread_profile();
 					}
 				}
 			}
 		}
 	}
+}
+
+translate([1.5*id,0,0]) union(){
+	// make the tube
+	cylinder(h=ph, d=id);
+	
+	// make 6 columns of tabs
+	for(i=[00:360/6:360-360/6]){
+		rotate(i) tab_column();
+	}
 			
 	// make the cap at the bottom of the tube
 	hull(){
-		cylinder(0.1, r);
-		cr = r*1.3; // Cap Radius
-		translate([0,0,-1*r/3]){ cylinder(0.1, cr*cos(30));}
-		translate([0,0,-3*r/3]){ linear_extrude(r/3){
+		cylinder(h=0.1, d=id);
+		cr = od/2/cos(30); // Cap Radius. Hexagon flats will be tangent to OD
+		translate([0,0,-1*id/6]){ cylinder(0.1, cr*cos(30));}
+		translate([0,0,-3*id/6]){ linear_extrude(id/6){
 			RoundedRegularPolygon(6,cr,cr/3);
 		}}
 	}
