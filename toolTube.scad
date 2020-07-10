@@ -4,13 +4,13 @@ wt = 0.5; // Wall Thickness, millimeters
 ml = 65; // Maximum Length of contained objects, millimeters
 ts = 30; // Thread slope, degrees (90 is axial)
 // This is the end of the configurable parameters!
-od = id*(32/30); // Outside Diameter (thread profile radius is id/30)
+od = id*(16/15); // Outside Diameter (thread profile diameter is id/15)
 ph = ml/2; // Part Height (extra length for overlap will come from cap)
 tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
 nt = floor((ph-(0.5*th)) / th); // Number of Tabs in a column to make threads
 module thread_profile(){ // uses approximations of cube angles and distances
-	scale([1.2*id/30,1.2*id/30,th/1.7]) rotate([45,-35,0]) cube(1,center=true);
+	resize([id/15,id/15,th]) rotate([45,-atan(1/sqrt(2))]) cube(1,center=true);
 }
 module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	s = $fn==0 ? $fa : 360/$fn; // angle Step between cylinder edges
