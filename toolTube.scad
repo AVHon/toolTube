@@ -34,8 +34,7 @@ module inner(){
 	cylinder(h=ph, d=id);
 	for(i=[1: 6]) rotate(i*360/6) tab_column();
 	hull(){ // cap at the bottom of the tube
-		cylinder(h=0.01, d=id);
-		translate([0, 0, -1*id/8]) cylinder(h=0.01, r=od/2);
+		translate([0, 0, -1*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
 		cr = od/2/cos(30); // Cap Radius. Hexagon with flats tangent to OD
 		translate([0, 0, -3*id/8]) linear_extrude(id/8)
 				RoundedRegularPolygon(6, cr, cr/3);
