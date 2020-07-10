@@ -4,7 +4,7 @@ wt = 0.5; // Wall Thickness, millimeters
 ml = 65; // Maximum Length of contained objects, millimeters
 ts = 30; // Thread slope, degrees (90 is axial)
 // This is the end of the configurable parameters!
-od = id*(16/15); // Outside Diameter (thread profile diameter is id/15)
+od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
 ph = ml/2; // Part Height (extra length for overlap will come from cap)
 tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
