@@ -5,7 +5,7 @@ ml = 65; // Maximum Length of contained objects, millimeters
 ts = 30; // Tab slope, degrees
 res = 4; // resolution, segments per hex face, integer 2 or greater
 // This is the end of the configurable parameters!
-od = id*(32/30); // Outside Diameter (tab profile radius is id/30)
+od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
 ph = ml/2; // Part Height (extra length for overlap will come from cap)
 tr = tan(ts)*PI*id/360; // Tab Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
