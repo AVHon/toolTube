@@ -1,14 +1,13 @@
 use <RoundedRegularPolygon.scad>;
 id = 20; // Inside Diameter, millimeters
 wt = 0.5; // Wall Thickness, millimeters
-ml = 65; // Maximum Length of contained objects, millimeters
-ts = 30; // Thread slope, degrees (90 is axial) (calculated on ID)
+tl = 32; // Tube Length, millimeters. Maximum contained length is 2*tl
+ts = 30; // Thread slope, degrees. 90 is axial. Calculated on ID
 // This is the end of the configurable parameters!
 od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
-ph = ml/2; // Part Height (extra length for overlap will come from cap)
 tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
-nt = floor((ph-(0.5*th)) / th); // Number of Tabs in a column to make threads
+nt = floor((tl-(0.5*th)) / th); // Number of Tabs in a column to make threads
 module thread_profile(){ // uses approximations of cube angles and distances
 	resize([id/15,id/15,th]) rotate([45,-atan(1/sqrt(2))]) cube(1,center=true);
 }
@@ -21,11 +20,11 @@ module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 		}
 	}
 }
-module tab_column(){ // make a column of `nt` many tabs, from `ph` down
-		for(n=[0: nt-1]) translate([0, 0, ph-n*th-th/2]) tab(30, id/2);
+module tab_column(){ // make a column of `nt` many tabs, from `tl` down
+		for(n=[0: nt-1]) translate([0, 0, tl-n*th-th/2]) tab(30, id/2);
 }
 module inner(){
-	cylinder(h=ph, d=id);
+	cylinder(h=tl, d=id);
 	for(i=[1: 6]) rotate(i*360/6) tab_column();
 	hull(){ // cap at the bottom of the tube
 		translate([0, 0, -1*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
@@ -36,8 +35,8 @@ module inner(){
 }
 translate([1.5*id, 0, 0]) inner();
 module outer(){
-	rotate([0,180]) translate([0,0,-ph]) difference(){
-		cylinder(h=ph, d=od);
+	rotate([0,180]) translate([0,0,-tl]) difference(){
+		cylinder(h=tl, d=od);
 		for(i=[1: 6]) rotate(i*360/6) translate([0, 0, 90*tr]) tab(120, od/2);
 	}
 }
