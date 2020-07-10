@@ -4,7 +4,7 @@ id = 20; // Inside Diameter
 wt = 0.5; // Wall Thickness
 ml = 65; // Maximum Length of contained objects
 ts = 30; // Tab slope, in Degrees
-res = 3; // resolution
+res = 4; // resolution. Integer 2 or greater
 // end of configurable parameters
 
 c = PI*id; // Circumference
@@ -26,21 +26,23 @@ module thread_profile(){
 	}
 }
 
+module tab(a, r){ // make a tab spanning up to `a` degrees of arc, at radius r
+	s = 360/$fn; // angle Step of all cylinders
+	for(ca=[s:s:a]){ // Current Angle to put a thread profile at
+		pa = ca-s; // Previous Angle of a thread profile, to connect to
+		hull(){
+			rotate(pa) translate([r, 0, tr*pa]) thread_profile();
+			rotate(ca) translate([r, 0, tr*ca]) thread_profile();
+		}
+	}
+}
+
 module tab_column(){
 	// make a column of `nt` many tabs, from top to bottom
 	for(n=[1:nt]){
-		z=ph-n*ph/nt;
+		z=ph-n*ph/nt+15*tr;
 		// make one tab
-		hull(){
-			for(i=[0:360/$fn:30]){ // tabs are 30 degrees long
-				rotate(i){
-					translate([id/2,0,tr*(i+15)+z]){
-
-						thread_profile();
-					}
-				}
-			}
-		}
+		translate([0,0,z]) tab(30, id/2);
 	}
 }
 
