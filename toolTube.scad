@@ -28,7 +28,8 @@ module thread_profile(){
 
 module tab_column(){
 	// make a column of `nt` many tabs, from top to bottom
-	for(z=[ph-ph/nt : -ph/nt : ph-nt*ph/nt]){
+	for(n=[1:nt]){
+		z=ph-n*ph/nt;
 		// make one tab
 		hull(){
 			for(i=[0:360/$fn:30]){ // tabs are 30 degrees long
@@ -54,7 +55,7 @@ translate([1.5*id,0,0]) union(){
 			
 	// make the cap at the bottom of the tube
 	hull(){
-		cylinder(h=0.1, d=id);
+		cylinder(h=0.01, d=id);
 		cr = od/2/cos(30); // Cap Radius. Hexagon flats will be tangent to OD
 		translate([0,0,-1*id/6]){ cylinder(0.1, cr*cos(30));}
 		translate([0,0,-3*id/6]){ linear_extrude(id/6){
