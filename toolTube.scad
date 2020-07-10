@@ -7,7 +7,6 @@ ts = 30; // Thread slope, degrees. 90 is axial. Calculated on ID
 od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
 tr = tan(ts)*PI*id/360; // Thread Rise, millimeters per degree
 th = tr*360/6; // Thread profile Height, millimeters
-nt = floor((pl-(0.5*th)) / th); // Number of Tabs in a column to make threads
 module thread_profile(){ // uses approximations of cube angles and distances
 	resize([id/15,id/15,th]) rotate([45,-atan(1/sqrt(2))]) cube(1,center=true);
 }
@@ -21,7 +20,8 @@ module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 	}
 }
 module tab_column(){ // make a column of `nt` many tabs, from `pl` down
-		for(n=[0: nt-1]) translate([0, 0, pl-n*th-th/2]) tab(30, id/2);
+	nt = floor(pl/th)-1; // Number of thread Tabs in a column
+	for(n=[0: nt-1]) translate([0, 0, pl-n*th-th/2]) tab(30, id/2);
 }
 module inner(){
 	cylinder(h=pl, d=id);
