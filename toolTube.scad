@@ -31,7 +31,7 @@ module inner(){
 		translate([0, 0, 2*id/8]) cylinder(h=id/8, r1=od/2, r2=id/2);
 	}
 }
-translate([1.5*id, 0, 0]) inner();
+translate([1.3*od, 0, 3*id/8]) inner();
 module outer(){
 	rotate([0,180]) translate([0,0,-pl]) difference(){
 		cylinder(h=pl, d=od);
