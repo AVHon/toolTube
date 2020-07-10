@@ -14,7 +14,8 @@ ph = ml/2; // Part Height (overlap will come from caps)
 
 tr = tan(ts)*c/360; // Tab Rise per degree
 th = tr*360/6; // Tab Height (6 spirals of threads fill the available space)
-nt = floor(6 * ph / (tr*360)); // Number of Tabs in each spiral
+echo(th=th, ph=ph);
+nt = floor((ph-(0.5*th)) / th); // Number of Tabs in each spiral
 echo(str(nt, " rows of tabs in each column."));
 
 $fn=res*6; // Cylinder resolution, segments per circle
@@ -41,32 +42,29 @@ module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
 module tab_column(){
 	// make a column of `nt` many tabs, from top to bottom
 	for(n=[0:nt-1]){
-		z=ph-n*ph/nt-th/2;
+		z=ph-n*th-th/2;
 		// make one tab
 		translate([0,0,z]) tab(30, id/2);
 	}
 }
 
-translate([1.5*id,0,0]) union(){
-	// make the tube
-	cylinder(h=ph, d=id);
-	
-	// make 6 columns of tabs
-	for(i=[00:360/6:360-360/6]){
-		rotate(i) tab_column();
-	}
-			
-	// make the cap at the bottom of the tube
-	hull(){
-		cylinder(h=0.01, d=id);
-		cr = od/2/cos(30); // Cap Radius. Hexagon flats will be tangent to OD
-		translate([0,0,-1*id/6]){ cylinder(0.1, cr*cos(30));}
-		translate([0,0,-3*id/6]){ linear_extrude(id/6){
-			RoundedRegularPolygon(6,cr,cr/3);
-		}}
+module inner(){
+	union(){
+		cylinder(h=ph, d=id); // tube
+		for(i=[1:6]) rotate(i*360/6) tab_column(); // 6 columns of tabs
+				
+		// cap at the bottom of the tube
+		hull(){
+			cylinder(h=0.01, d=id);
+			cr = od/2/cos(30); // Cap Radius. Hexagon with flats tangent to OD
+			translate([0,0,-1*id/8]) cylinder(h=0.01, r=od/2);
+			translate([0,0,-3*id/8]) linear_extrude(id/8){
+				RoundedRegularPolygon(6,cr,cr/3);
+			}
+		}
 	}
 }
-
+translate([1.5*id,0,0]) inner();
 // difference(){
 // 	cylinder(h=ph, r=id/2+wt);
 // 	as = [ for(i=[0:360/$fn:(ph/tr)+(360/$fn)]) i];
