@@ -19,6 +19,14 @@ echo(str(nt, " rows of tabs in each column."));
 
 $fn=res*6; // Cylinder resolution, segments per circle
 
+module thread_profile(){
+	scale([id/15,id/15,th]) union(){
+		$fn=6;
+		cylinder(0.5, 0.5, 0);
+		translate ([ 0, 0, -0.5]) cylinder(0.5, 0, 0.5);
+	}
+}
+
 translate([1.5*id,0,0]) union(){
 	// make the tube
 	linear_extrude(ph){
@@ -34,13 +42,7 @@ translate([1.5*id,0,0]) union(){
 				for(i=[15:360/$fn:45]){
 					rotate(i+j-15){
 						translate([r,0,tr*i+k]){
-							scale([id/15,id/15,th]){
-								union(){
-									$fn=6;
-									cylinder(0.5,0.5,0);
-									translate([0,0,-0.5]) cylinder(0.5,0,0.5);
-								}
-							}
+							thread_profile();
 						}
 					}
 				}
