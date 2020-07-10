@@ -17,13 +17,11 @@ module thread_profile(){
 	scale(-1) cylinder(h=th/2, r1=id/30, r2=0);
 }
 module tab(a, r){ // make a tab spanning back `a` degrees of arc, at radius r
-	s = $fn==0 ? $fa : 360/$fn; // angle Step between verticies
-	for(ca=[-s*floor((a-s)/s): s: 0]){ // Current Angle to extend tab to
-		pa = ca-s; // Previous Angle of a thread profile, to connect to
-		echo(pa=pa, ca=ca);
-		hull(){
-			rotate(pa) translate([r, 0, tr*pa]) thread_profile();
-			rotate(ca) translate([r, 0, tr*ca]) thread_profile();
+	s = $fn==0 ? $fa : 360/$fn; // angle Step between cylinder edges
+	for(pa=[for(i=[-s*floor((a-s)/s):s:0]) [i-s,i]]){ // Pair of Angles
+		hull(){ // one thread profile on each edge of the tube cylinder
+			rotate(pa[0]) translate([r, 0, tr*pa[0]]) thread_profile();
+			rotate(pa[1]) translate([r, 0, tr*pa[1]]) thread_profile();
 		}
 	}
 }
