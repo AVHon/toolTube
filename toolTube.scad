@@ -15,7 +15,7 @@ module thread(a, r){ // make a thread spanning back `a` degrees, at radius r
 		}
 	}
 }
-od = id*(16/15)+wt; // Outside Diameter (thread profile diameter is id/15)
+od = id*(16/15)+2*wt; // Outside Diameter (thread profile diameter is id/15)
 module inner(){ // tube, 6 columns of threads, and a cap at the bottom
 	cylinder(h=pl, d=id);
 	for(i=[1:6]) rotate(i*360/6) translate([0,0,pl+th/2])
