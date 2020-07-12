@@ -3,6 +3,8 @@ id = 20; // Inside Diameter, millimeters
 pl = 32; // Part Length, millimeters. Maximum contained length is 2*PL
 th = 6; // Thread Height, millimeters. Like metric screw pitch, but 6 threads
 wt = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
+translate([2*id, 0, 3*id/8]) inner();
+outer();
 module thread_profile(){
 	resize([id/15,id/15,th]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
@@ -25,12 +27,10 @@ module inner(){ // tube, 6 columns of threads, and a cap at the bottom
 		translate([0, 0, 2*id/8]) cylinder(h=id/8, d1=od, d2=id);
 	}
 }
-translate([1.3*od, 0, 3*id/8]) inner();
 module outer(){ // tube, and 6 upside-down threads
 	rotate([0,180]) translate([0,0,-pl]) difference(){
 		cylinder(h=pl, d=od);
 		for(i=[1:6]) rotate(i*360/6) translate([0,0,1.5*th]) thread(120, od/2);
 	}
 }
-outer();
 
