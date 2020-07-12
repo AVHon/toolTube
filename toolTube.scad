@@ -21,7 +21,7 @@ module inner(){ // tube, 6 columns of threads, and a cap at the bottom
 	for(i=[1:6]) rotate(i*360/6) translate([0,0,pl-tp/2])
 	for(n=[0:pl/tp-2]) translate([0, 0, -n*tp]) thread(30, id/2);
 	translate([0, 0, -3*id/8]) hull(){
-		linear_extrude(id/8) RoundedRegularPolygon(6, od/2/cos(30), od/5);
+		linear_extrude(id/8) RoundedRegularPolygon(6, od/2/cos(30), od/6);
 		translate([0, 0, 2*id/8]) cylinder(h=id/8, d1=od, d2=id);
 	}
 }
