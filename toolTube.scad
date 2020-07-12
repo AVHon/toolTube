@@ -2,8 +2,8 @@ use <RoundedRegularPolygon.scad>
 id = 20; // Inside Diameter, millimeters
 pl = 32; // Part Length, millimeters. Maximum contained length is 2*pl
 wt = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
-translate([2*id, 0, 3*id/8]) inner();
-outer();
+translate([2*id, 0, 3*id/8]) inner(); // Use "//" to comment out this line
+outer(); // or this line to export STLs for vase/spiralize mode. (only 1 part)
 tp = PI*id/8; // Thread Pitch, millimeters
 module thread_profile(){
 	resize([id/15,id/15,tp]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
