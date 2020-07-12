@@ -4,7 +4,7 @@ pl = 32; // Part Length, millimeters. Maximum contained length is 2*PL
 wt = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
 translate([2*id, 0, 3*id/8]) inner();
 outer();
-tp = PI*id/10; // Thread Pitch, millimeters
+tp = PI*id/8; // Thread Pitch, millimeters
 module thread_profile(){
 	resize([id/15,id/15,tp]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
