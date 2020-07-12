@@ -8,14 +8,12 @@ tp = PI*id/8; // Thread Pitch, millimeters
 module thread_profile(){
 	resize([id/15,id/15,tp]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
-module thread(a, r){ // make a thread spanning back `a` degrees, at radius r
+module thread(l, r){ // make a thread, arc length `l` degrees, at radius r
 	s = $fn==0 ? $fa : 360/$fn; // angle Step between cylinder edges
-	for(pa=[for(i=[1:a/s]) -s*[i-1,i]]){ // Pair of Angles of cylinder edges
-		hull(){ // one thread profile on each edge of the tube cylinder
-			rotate(pa[0]) translate([r, 0, pa[0]*tp/360*6]) thread_profile();
-			rotate(pa[1]) translate([r, 0, pa[1]*tp/360*6]) thread_profile();
-		}
-	}
+	for(pa=[for(i=[1:l/s]) -s*[i-1,i]]) // Pairs of Angles of cylinder edges
+		hull() // connect 2 thread profiles together
+			for(a=[pa[0],pa[1]]) // 1 profile on each edge of the cylinder
+				rotate(a) translate([r,0,a*tp/360*6]) thread_profile();
 }
 od = id*(16/15)+2*wt; // Outside Diameter (thread profile diameter is id/15)
 module inner(){ // tube, 6 columns of threads, and a cap at the bottom
