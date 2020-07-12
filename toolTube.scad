@@ -1,6 +1,6 @@
 use <RoundedRegularPolygon.scad>
 id = 20; // Inside Diameter, millimeters
-pl = 32; // Part Length, millimeters. Maximum contained length is 2*PL
+pl = 32; // Part Length, millimeters. Maximum contained length is 2*pl
 wt = 0.5; // Wall Thickness, millimeters. Tune to suit your printer+slicer
 translate([2*id, 0, 3*id/8]) inner();
 outer();
