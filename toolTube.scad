@@ -1,7 +1,7 @@
 use <RoundedRegularPolygon.scad>
 // Inside Diameter (millimeters)
 id = 20;
-// Length (millimeters)
+// Length (millimeters) of each part
 l = 32;
 // Wall Thickness (millimeters) of parts. Tune to your printer & slicer.
 wt = 0.5;
@@ -9,7 +9,7 @@ parts = 6; // [2:inside, 3:outside, 6:inside and outside]
 resolution = 3; // [1:5]
 $fn = 6*pow(2,resolution);
 p = PI*id/8; // thread Pitch, millimeters
-tprofile = [id/15,id/15,p]; // size of thread profile
+tprofile = [id/15,id/15,p]; // size of thread profile (depth, width, height)
 od = id+tprofile.x+2*wt; // Outside Diameter
 module thread(a, d){ // make a thread, spanning Arc degrees, at Diameter
 	for(edge=[1:a*$fn/360]) hull() for(angle=(-360/$fn)*[edge-1, edge])
@@ -28,3 +28,4 @@ if(parts%3==0) rotate([0,180]) translate([0,0,-l]) difference(){
 		cylinder(h=l, d=od);
 		for(i=[1:6]) rotate(i*60) translate([0,0,1.5*p]) thread(120, od);
 }
+// Print in Vase or Spiralize mode. Alex Von Hoene 20 July 2020 CC0 alexvh.me
