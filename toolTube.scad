@@ -1,3 +1,5 @@
+// Customizable twist-together tube for holding sharp or fragile things.
+// Print in Vase or Spiralize mode. Alex Von Hoene 20 July 2020 CC0 alexvh.me
 use <RoundedRegularPolygon.scad>
 // Inside Diameter (millimeters)
 id = 20;
@@ -28,4 +30,3 @@ if(parts%3==0) rotate([0,180]) translate([0,0,-l]) difference(){
 	cylinder(h=l, d=od);
 	for(i=[1:6]) rotate(i*60) translate([0,0,1.5*p]) thread(120, od);
 }
-// Print in Vase or Spiralize mode. Alex Von Hoene 20 July 2020 CC0 alexvh.me
