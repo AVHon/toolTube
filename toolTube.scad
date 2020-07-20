@@ -11,8 +11,8 @@ $fn = 6*pow(2,resolution);
 p = PI*id/8; // thread Pitch, millimeters
 tprofile = [id/15,id/15,p]; // size of thread profile
 od = id+tprofile.x+2*wt; // Outside Diameter
-module thread(l, d){ // make a thread, arc length `l` degrees, at Diameter
-	for(edge=[1:l*$fn/360]) hull() for(angle=(-360/$fn)*[edge-1, edge])
+module thread(a, d){ // make a thread, spanning Arc degrees, at Diameter
+	for(edge=[1:a*$fn/360]) hull() for(angle=(-360/$fn)*[edge-1, edge])
 		rotate(angle) translate([d/2,0,angle*p/60])
 			resize(tprofile) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
