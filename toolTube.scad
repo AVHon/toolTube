@@ -18,11 +18,8 @@ module thread_profile(){
 	resize([id/15,id/15,tp]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
 module thread(l, r){ // make a thread, arc length `l` degrees, at radius r
-	s = $fn==0 ? $fa : 360/$fn; // angle Step between cylinder edges
-	for(pa=[for(i=[1:l/s]) -s*[i-1,i]]) // Pairs of Angles of cylinder edges
-		hull() // connect 2 thread profiles together
-			for(a=[pa[0],pa[1]]) // profiles on adjacent edges of the cylinder
-				rotate(a) translate([r,0,a*tp/360*6]) thread_profile();
+	for(edge=[1:l*$fn/360]) hull() for(angle=(-360/$fn)*[edge-1, edge])
+		rotate(angle) translate([r,0,angle*tp/360*6]) thread_profile();
 }
 od = id*(16/15)+2*wt; // Outside Diameter (thread profile diameter is id/15)
 module inside(){ // tube, 6 columns of threads, and a cap underneath
