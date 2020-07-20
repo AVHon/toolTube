@@ -11,13 +11,12 @@ if(parts%2==0) translate([(parts%3==0)?1.5*id:0, 0, 3*id/8]) inside();
 if(parts%3==0) outside();
 $fn=6*pow(2,resolution);
 p = PI*id/8; // thread Pitch, millimeters
-od = id*(16/15)+2*wt; // Outside Diameter (thread profile diameter is id/15)
-module thread_profile(){
-	resize([id/15,id/15,p]) rotate([45,atan(1/sqrt(2))]) cube(1,true);
-}
+tprofile = [id/15,id/15,p]; // size of thread profile
+od = id+tprofile.x+2*wt; // Outside Diameter
 module thread(l, d){ // make a thread, arc length `l` degrees, at Diameter
 	for(edge=[1:l*$fn/360]) hull() for(angle=(-360/$fn)*[edge-1, edge])
-		rotate(angle) translate([d/2,0,angle*p/60]) thread_profile();
+		rotate(angle) translate([d/2,0,angle*p/60])
+			resize(tprofile) rotate([45,atan(1/sqrt(2))]) cube(1,true);
 }
 module inside(){ // tube, 6 Columns of threads, and a cap underneath
 	cylinder(h=l, d=id);
