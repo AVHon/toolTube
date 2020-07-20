@@ -5,11 +5,11 @@ id = 20;
 l = 32;
 // Wall Thickness (millimeters) of parts. Tune to your printer & slicer.
 wt = 0.5;
-parts=6; // [2:inside, 3:outside, 6:inside and outside]
+parts = 6; // [2:inside, 3:outside, 6:inside and outside]
 resolution = 3; // [1:5]
 if(parts%2==0) translate([(parts%3==0)?1.5*id:0, 0, 3*id/8]) inside();
 if(parts%3==0) outside();
-$fn=6*pow(2,resolution);
+$fn = 6*pow(2,resolution);
 p = PI*id/8; // thread Pitch, millimeters
 tprofile = [id/15,id/15,p]; // size of thread profile
 od = id+tprofile.x+2*wt; // Outside Diameter
