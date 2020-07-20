@@ -24,7 +24,7 @@ if(parts%2==0) translate([(parts%3==0)?1.5*id:0, 0, 3*id/8]){
 		RoundedRegularPolygon(i==1?$fn:6, i==1?id/2:od/2/cos(30), od/(4*i-6));
 }
 // Outside part is a tube, and 6 upside-down threads
-if(parts%2==0) rotate([0,180]) translate([0,0,-l]) difference(){
+if(parts%3==0) rotate([0,180]) translate([0,0,-l]) difference(){
 		cylinder(h=l, d=od);
 		for(i=[1:6]) rotate(i*60) translate([0,0,1.5*p]) thread(120, od);
 }
