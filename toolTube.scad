@@ -25,7 +25,7 @@ if(parts%2==0) translate([(parts%3==0)?1.5*id:0, 0, 3*id/8]){
 }
 // Outside part is a tube, and 6 upside-down threads
 if(parts%3==0) rotate([0,180]) translate([0,0,-l]) difference(){
-		cylinder(h=l, d=od);
-		for(i=[1:6]) rotate(i*60) translate([0,0,1.5*p]) thread(120, od);
+	cylinder(h=l, d=od);
+	for(i=[1:6]) rotate(i*60) translate([0,0,1.5*p]) thread(120, od);
 }
 // Print in Vase or Spiralize mode. Alex Von Hoene 20 July 2020 CC0 alexvh.me
